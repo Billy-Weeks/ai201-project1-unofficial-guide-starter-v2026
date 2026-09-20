@@ -26,6 +26,8 @@ contains the answer.
 <!-- e.g. "One of my questions is about a topic only two documents mention, so
      I expect that one to be hard." -->
 
+I chose 4 of 5 because there may be an instance where a question is obscure and only appears in one or two documents which may result in a retrieved chunk not including an answer.
+
 ---
 
 ## 2. Every answer names a source
@@ -35,6 +37,8 @@ Every answer the system produces names at least one source document.
 **Why this target:**
 <!-- Why all five and not four? What about your setup makes that achievable —
      or what would have to go wrong for it not to be? -->
+
+I chose 5 of 5 because all five questions are answerable from my corpus, so every generated answer should be traceable to at least one of the source documents used to produce it.
 
 ---
 
@@ -53,6 +57,8 @@ in at least 4 of 5 tries.
 <!-- What did your distances look like when you set the cutoff in Milestone 4?
      Was there a clean gap, or did the two groups overlap? -->
 
+I chose 4 of 5 because the out of scope questions are unrelated to the chosen corpus, so the relevance gate should reject most of them. One is allowed because an unrelated question might still retrieve a borderline result.
+
 ---
 
 ## 4. Something about your chunks
@@ -68,12 +74,12 @@ in at least 4 of 5 tries.
           sentence cut in half at either end."
        - "No chunk is shorter than 200 characters, since anything below that
           in my corpus turned out to be a heading with no content under it." -->
-
+At least 4 out of 5 chunks sampled from the specific corpus contain complete, self-contained ideas without cutting a sentence or thought in half.
 
 
 **Why this target:**
 
-
+I chose 4 out of 5 because the city-guide documents are split and organized into clear sections, with most chunks containing whole ideas. This also allows for the case that there happens to be a chunk where ideas begin in one, but continue in the following one.
 
 ---
 
@@ -87,11 +93,11 @@ in at least 4 of 5 tries.
      present — anything, as long as it names a number or an observable
      outcome. -->
 
-
+All 5 answers to my in-corpus test questions contain only factual claims supported by the retrieved chunks.
 
 **Why this target:**
 
-
+I chose 5 of 5 because the city-guides corpus contains concrete facts. Since the system is supposed to ground its answers in retrieved chunks, even on unsupported factual claim would make the answer unreliable.
 
 ---
 

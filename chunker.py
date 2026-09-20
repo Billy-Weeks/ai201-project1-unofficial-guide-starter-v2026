@@ -23,6 +23,7 @@ your pipeline, not giving up.
 """
 
 from dataclasses import dataclass
+import re
 
 import config
 from ingest import Document
@@ -82,22 +83,106 @@ def fallback_split(
 
 def split_documents(documents: list[Document]) -> list[Chunk]:
     """
-    Split documents into chunks. ⚠️ REPLACE THE BODY OF THIS IN MILESTONE 3.
+    Split the city-guide documents into paragraph-aware chunks.
 
-    Right now it just calls the fallback. That is the plain, generic behaviour
-    the brief is talking about.
-
-    When you write your own strategy, set `produced_by` to
-    "chunker.py::split_documents" so your README's Sample Chunks section names
-    the right function. `app.py chunks` prints that string for you.
-
-    Things worth thinking about before you write any code:
-      - Are your documents short posts or long guides?
-      - Is the useful information in one sentence, or spread over a paragraph?
-      - Would splitting on paragraph breaks keep more thoughts intact than
-        splitting on a character count?
+    Chunks have a 400-character maximum and no overlap. Headings stay with
+    the content they introduce when possible, and oversized blocks are split
+    at word boundaries.
     """
-    return fallback_split(documents)
+    max_chars = 400
+    # Store every chunk created from every source document.
+    chunks: list[Chunk] = []
+
+    for doc in documents:
+        # Split each Markdown document at blank lines so paragraphs and
+        # headings become separate blocks instead of fixed-size fragments.
+        raw_blocks = [
+            block.strip()
+            for block in re.split(r"\n\s*\n", doc.text)
+            if block.strip()
+        ]
+
+        # Keep each heading with the content it introduces. This prevents a
+        # heading from being stranded at the end of the previous chunk.
+        blocks: list[str] = []
+        position = 0
+        while position < len(raw_blocks):
+            block = raw_blocks[position]
+            if (
+                re.match(r"^#{1,6}\s", block)
+                and position + 1 < len(raw_blocks)
+            ):
+                blocks.append(block + "\n\n" + raw_blocks[position + 1])
+                position += 2
+            else:
+                blocks.append(block)
+                position += 1
+
+        # Build one output chunk by combining complete blocks until adding
+        # another block would exceed the character limit.
+        current: list[str] = []
+        current_length = 0
+        index = 0
+
+        def emit(piece: str) -> None:
+            # Convert finished text into the Chunk object expected by the
+            # rest of the retrieval pipeline.
+            nonlocal index
+            piece = piece.strip()
+            if piece:
+                chunks.append(
+                    Chunk(
+                        text=piece,
+                        source=doc.source,
+                        index=index,
+                        produced_by="chunker.py::split_documents",
+                    )
+                )
+                index += 1
+
+        for block in blocks:
+            # If one block is too long, flush the current chunk and split the
+            # oversized block at word boundaries rather than cutting a word.
+            if len(block) > max_chars:
+                if current:
+                    emit("\n\n".join(current))
+                    current = []
+                    current_length = 0
+
+                words: list[str] = []
+                word_length = 0
+                for word in block.split():
+                    added_length = len(word) if not words else len(word) + 1
+                    if words and word_length + added_length > max_chars:
+                        emit(" ".join(words))
+                        words = [word]
+                        word_length = len(word)
+                    else:
+                        words.append(word)
+                        word_length += added_length
+                if words:
+                    emit(" ".join(words))
+                continue
+
+            # Count the blank line that will separate this block from the
+            # previous one when deciding whether it fits in the current chunk.
+            added_length = len(block) if not current else len(block) + 2
+            if current and current_length + added_length > max_chars:
+                # Save the full current chunk before starting a new one.
+                emit("\n\n".join(current))
+                current = []
+                current_length = 0
+
+            # Add this complete block to the chunk currently being assembled.
+            current.append(block)
+            current_length += len(block) if len(current) == 1 else len(block) + 2
+
+        if current:
+            # Save the final partial chunk from this document.
+            emit("\n\n".join(current))
+
+    # Return all chunks so indexing and retrieval can use them.
+    return chunks
 
 
 def describe(chunks: list[Chunk]) -> str:

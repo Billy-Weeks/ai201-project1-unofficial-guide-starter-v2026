@@ -1,6 +1,7 @@
 # The Unofficial Guide
 
 <!-- Replace this line with your name and which corpus you picked. -->
+Billy Weeks; Corpus: city_guides
 
 > **This file is your submission.** Fill it in as you go — most sections get
 > written during the milestone that produces them, not at the end.
@@ -29,8 +30,14 @@
 
 ## Chunking Strategy
 
-**Chunk size:**
-**Overlap:**
+**Chunk size: 400 characters maximum**
+**Overlap: 0**
+
+I split the city-guide documents at paragraph boundaries and keep headings with the content they introduce. I chose this because the corpus is organized into labeled sections with short, meaningful paragraphs. Splitting at these boundaries should preserve complete ideas better than fixed character windows.
+
+After testing, I found that 400 characters provides enough context for these guides while still keeping chunks focused. A smaller limit might work for this corpus, but 40 is a reasonable balance between perserving context and avoiding unrelated information.
+
+The splitter produced 106 chunks, averaging 271 characters. The shortest was 54 characters and the longest was 399 characters
 
 <!-- What about YOUR documents made you pick these numbers? Short posts and
      long sectioned guides don't want the same chunking, and "800 seemed
@@ -53,29 +60,65 @@
 
      Milestone 3. -->
 
-**Chunk 1** — source: `` — produced by: ``
+**Chunk 1** — source: `guide_accessibility.md#0` — produced by: `chunker.py::split_documents`
 
 ```
-```
+======================================================================
+Chunk 1  |  source: guide_accessibility.md#0  |  produced by: chunker.py::split_documents
+======================================================================
+# Getting around the region with limited mobility
 
-**Chunk 2** — source: `` — produced by: ``
-
-```
-```
-
-**Chunk 3** — source: `` — produced by: ``
-
-```
-```
-
-**Chunk 4** — source: `` — produced by: ``
+An honest assessment rather than a promotional one. Some of these places are
+difficult and it is better to know in advance.
 
 ```
+
+**Chunk 2** — source: `guide_corry_vale.md#5` — produced by: `chunker.py::split_documents`
+
+```
+======================================================================
+Chunk 2  |  source: guide_corry_vale.md#5  |  produced by: chunker.py::split_documents
+======================================================================
+## Where to stay
+
+Perhaps thirty beds in the entire valley, spread across two pubs and a handful of farmhouse rooms. In summer these are booked months ahead. Camping is permitted on two marked fields and nowhere else.
+
 ```
 
-**Chunk 5** — source: `` — produced by: ``
+**Chunk 3** — source: `guide_givens_mill.md#2` — produced by: `chunker.py::split_documents`
 
 ```
+======================================================================
+Chunk 3  |  source: guide_givens_mill.md#2  |  produced by: chunker.py::split_documents
+======================================================================
+## Getting around
+
+Everything is on one street along the river. The mill is at one end and the church at the other, eight minutes apart. The riverside path continues in both directions for as far as you want to walk.
+
+```
+
+**Chunk 4** — source: `guide_marchwood.md#0` — produced by: `chunker.py::split_documents`
+
+```
+======================================================================
+Chunk 4  |  source: guide_marchwood.md#0  |  produced by: chunker.py::split_documents
+======================================================================
+# Marchwood
+
+Marchwood is the regional hub — 180,000 people, the junction everyone changes trains at, and a city most visitors pass through rather than stop in. That is a mistake, though an understandable one, since almost nothing of interest is near the station.
+
+```
+
+**Chunk 5** — source: `guide_regional_transport.md#5` — produced by: `chunker.py::split_documents`
+
+```
+======================================================================
+Chunk 5  |  source: guide_regional_transport.md#5  |  produced by: chunker.py::split_documents
+======================================================================
+Parking is the constraint rather than driving. Both Halden Bay lots fill by
+10am on summer weekends. Kestrelford's lower car park is free and involves a
+steep walk up.
+
 ```
 
 ## Sample Answer

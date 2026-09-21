@@ -1,20 +1,6 @@
 # The Unofficial Guide
 
-<!-- Replace this line with your name and which corpus you picked. -->
 Billy Weeks; Corpus: city_guides
-
-> **This file is your submission.** Fill it in as you go — most sections get
-> written during the milestone that produces them, not at the end.
->
-> How the starter works, and every command you'll need, is in `RUNNING.md`.
-> Leave that file alone.
->
-> **Paste everything as text.** No screenshots, no video. A typed table gets
-> full credit; a picture of the same table gets none.
->
-> Delete these instruction blocks as you replace them. The `<!-- -->` comments
-> are notes to you and don't show up when the page renders — you can leave them
-> or remove them.
 
 ---
 
@@ -22,11 +8,11 @@ Billy Weeks; Corpus: city_guides
 
 ## What This Does
 
-<!-- Three or four sentences. Which corpus you picked, and the kinds of
-     questions your system answers. Write it for someone who has never seen
-     this repo.
+This project builds a question and answer system over the `city_guides` corpus, which contains 14 structured travel guides. The system answers questions about: regional transportation, accessibility, food, walking, seasons, and individual towns.
 
-     Milestone 5. -->
+It splits the documents into paragraph aware chunks, retrieves relevant chunks, and generates answers that name their source documents.
+
+Questions outside the corpus should be refused instead of answered with guesses.
 
 ## Chunking Strategy
 
@@ -35,9 +21,9 @@ Billy Weeks; Corpus: city_guides
 
 I split the city-guide documents at paragraph boundaries and keep headings with the content they introduce. I chose this because the corpus is organized into labeled sections with short, meaningful paragraphs. Splitting at these boundaries should preserve complete ideas better than fixed character windows.
 
-After testing, I found that 400 characters provides enough context for these guides while still keeping chunks focused. A smaller limit might work for this corpus, but 400 is a reasonable balance between perserving context and avoiding unrelated information.
+After testing, I found that 400 characters provides enough context for these guides while still keeping chunks focused. A smaller limit might work for this corpus, but 400 is a reasonable balance between preserving context and avoiding unrelated information.
 
-The splitter produced 106 chunks, averaging 271 characters. The shortest was 54 characters and the longest was 399 characters
+The splitter produced 106 chunks, averaging 271 characters. The shortest was 54 characters and the longest was 399 characters.
 
 ## Sample Chunks
 
@@ -107,7 +93,8 @@ steep walk up.
 <!-- One complete question and answer, pasted as text, with the source line
      visible. Milestone 4. -->
 
-**Question: Which town has a step-free mill museum?**
+**Question:**
+Which town has a step-free mill museum?
 
 ```
 (.venv) meznu@BillyLaptop:/mnt/c/CodePath_AI-2/ai201-project1-unofficial-guide-starter-v2026$ python app.py --corpus city_guides ask "Which town has a step-free mill museum?"
@@ -163,9 +150,9 @@ I kept the starter cutoff of 0.6 because it correctly separated all five in-corp
 
      Milestone 5. -->
 
-**1.**
+**1.** I asked Codex to help me understand the differences between test questions and acceptance criteria. It explained that questions are test cases while criteria are standards for judging the system. I used that explanaton to make my questions more specific and write measurable criteria.
 
-**2.**
+**2.** I asked Codex to help design a chunker for the structured travel guides. The first implementation grouped paragraphs but produced some chunks with headings separated from their content. After inspecting the sample chunks, I changed the code so headings stay with the paragraph they introduce.
 
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never

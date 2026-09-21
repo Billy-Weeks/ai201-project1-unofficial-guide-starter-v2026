@@ -63,18 +63,7 @@ I chose 4 of 5 because the out of scope questions are unrelated to the chosen co
 
 ## 4. Something about your chunks
 
-<!-- YOU WRITE THIS ONE.
-
-     How would you know if your chunks were the right size? Name something
-     countable or observable.
-
-     Examples of the right shape — don't copy these, they should come from
-     what you actually saw in Milestone 3:
-       - "At least 4 of 5 sampled chunks read as a complete thought, with no
-          sentence cut in half at either end."
-       - "No chunk is shorter than 200 characters, since anything below that
-          in my corpus turned out to be a heading with no content under it." -->
-At least 4 out of 5 chunks sampled from the specific corpus contain complete, self-contained ideas without cutting a sentence or thought in half.
+Of five chunks printed by `python app.py --corpus city_guides chunks -n 5`, at least four contain complete, self-contained ideas without cutting a sentence or thought in half.
 
 
 **Why this target:**
@@ -85,19 +74,11 @@ I chose 4 out of 5 because the city-guide documents are split and organized into
 
 ## 5. Your choice
 
-<!-- YOU WRITE THIS ONE TOO.
-
-     Pick something you actually care about getting right. It could be about
-     speed, about refusals, about a particular kind of question your corpus
-     handles badly, about source attribution being correct rather than merely
-     present — anything, as long as it names a number or an observable
-     outcome. -->
-
 All 5 answers to my in-corpus test questions contain only factual claims supported by the retrieved chunks.
 
 **Why this target:**
 
-I chose 5 of 5 because the city-guides corpus contains concrete facts. Since the system is supposed to ground its answers in retrieved chunks, even on unsupported factual claim would make the answer unreliable.
+I chose 5 of 5 because the city-guides corpus contains concrete facts. Since the system is supposed to ground its answers in retrieved chunks, even one unsupported factual claim would make the answer unreliable.
 
 ---
 

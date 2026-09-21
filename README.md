@@ -35,7 +35,7 @@ Billy Weeks; Corpus: city_guides
 
 I split the city-guide documents at paragraph boundaries and keep headings with the content they introduce. I chose this because the corpus is organized into labeled sections with short, meaningful paragraphs. Splitting at these boundaries should preserve complete ideas better than fixed character windows.
 
-After testing, I found that 400 characters provides enough context for these guides while still keeping chunks focused. A smaller limit might work for this corpus, but 40 is a reasonable balance between perserving context and avoiding unrelated information.
+After testing, I found that 400 characters provides enough context for these guides while still keeping chunks focused. A smaller limit might work for this corpus, but 400 is a reasonable balance between perserving context and avoiding unrelated information.
 
 The splitter produced 106 chunks, averaging 271 characters. The shortest was 54 characters and the longest was 399 characters
 
@@ -107,7 +107,7 @@ steep walk up.
 <!-- One complete question and answer, pasted as text, with the source line
      visible. Milestone 4. -->
 
-**Question: Which town has a step-free mill museum?"**
+**Question: Which town has a step-free mill museum?**
 
 ```
 (.venv) meznu@BillyLaptop:/mnt/c/CodePath_AI-2/ai201-project1-unofficial-guide-starter-v2026$ python app.py --corpus city_guides ask "Which town has a step-free mill museum?"

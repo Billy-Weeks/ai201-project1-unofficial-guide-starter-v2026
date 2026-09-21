@@ -39,26 +39,7 @@ After testing, I found that 400 characters provides enough context for these gui
 
 The splitter produced 106 chunks, averaging 271 characters. The shortest was 54 characters and the longest was 399 characters
 
-<!-- What about YOUR documents made you pick these numbers? Short posts and
-     long sectioned guides don't want the same chunking, and "800 seemed
-     reasonable" earns nothing. Point at something you noticed when you read
-     the documents in Milestone 1.
-
-     If you changed your mind partway through, say so and say why. That's worth
-     more than pretending you got it right first time.
-
-     Milestone 3. -->
-
 ## Sample Chunks
-
-<!-- Five chunks, pasted as text. Label each one and name the file it came from
-     AND the function that produced it — the grader checks your code against
-     what you claim here.
-
-     `python app.py chunks -n 5` prints all three for you. Copy them straight
-     across.
-
-     Milestone 3. -->
 
 **Chunk 1** — source: `guide_accessibility.md#0` — produced by: `chunker.py::split_documents`
 
@@ -126,27 +107,50 @@ steep walk up.
 <!-- One complete question and answer, pasted as text, with the source line
      visible. Milestone 4. -->
 
-**Question:**
+**Question: Which town has a step-free mill museum?"**
+
+```
+(.venv) meznu@BillyLaptop:/mnt/c/CodePath_AI-2/ai201-project1-unofficial-guide-starter-v2026$ python app.py --corpus city_guides ask "Which town has a step-free mill museum?"
+  (best distance 0.384, cutoff 0.6)
+
+```
 
 **Answer:**
 
 ```
+
+Brightwater has a step-free mill museum, according to guide_accessibility.md.
+
+Sources retrieved: guide_accessibility.md, guide_brightwater.md, guide_givens_mill.md, guide_marchwood.md
+
+
 ```
+
+**Retrieval setting:**
+
+I kept the default top-k value of 5 after inspecting the returned chunks. The
+relevant chunks appeared in the results without too much unrelated material.
 
 **My relevance cutoff:**
 
-<!-- The number you set in config.py, and how you got there.
+0.6
 
-     You ran five questions your corpus covers and the five in OUT_OF_SCOPE
-     that it clearly doesn't, and wrote down the best distance for each. What
-     did those two groups look like? Where was the gap? Put the actual numbers
-     here — the table below wants all ten rows.
+**Explanation:**
+I kept the starter cutoff of 0.6 because it correctly separated all five in-corpus questions from all five out of scope questions. Although a slightly higher cutoff might also work, say 0.75 or 0.8, there was no evidence that changing it would improve results, and raising it could allow weaker matches through.
 
-     Milestone 4. -->
 
 | Question | In corpus? | Best distance |
-|---|---|---|
-|  |  |  |
+|-------------------------------------------------------------------------|---|---|
+| "Which town has a step-free mill museum?"                               | yes | 0.3835 |
+| "Which town is a regional hub?" | yes | 0.5521 |
+| "Which town is difficult to reach by car, but easy to explore on foot?" | yes | 0.4154 |
+| "In Kestrelford, what is the reason most people come back?" | yes | 0.5313 |
+| "When is arguably the best week of the year in Brightwater?" | yes | 0.3575 |
+| "What is the capital of Mongolia?" | no | 0.8026 |
+| "How do I change the oil in a diesel engine?" | no | 0.8917 |
+| "Who won the 1994 World Cup?" | no | 0.9360 |
+| "What is the recommended dosage of ibuprofen for a headache?" | no | 0.8486 |
+| "How do I write a for loop in Rust?" | no | 0.8130 |
 
 ## How I Used AI
 

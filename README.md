@@ -181,15 +181,141 @@ I kept the starter cutoff of 0.6 because it correctly separated all five in-corp
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
-| 4. | | | | | |
-| 5. | | | | | |
+| 1. Retrieved chunk contains the answer | 4 of 5 | 4 of 5 | 4 of 5 | 4 of 5 | MET |
+| 2. Every answer names a source | 5 of 5 | 4 of 5 | 4 of 5 | 4 of 5 | MISSED |
+| 3. Gate stops out-of-corpus questions | 4 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
+| 4. Chunks contain complete, not cut-off ideas| 4 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
+| 5. Answers contain only factual claims supported by the retrieved chunks| 5 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
 
+---
 <!-- Underneath, paste the REAL output for each criterion from one of your
      runs — the actual text your system produced, not a description of it.
      Name the file and function that produced it. -->
+### Run 1 generated answers
+
+Source: `results/run_2026-09-23_1803_before.md`  
+Produced by: `run_eval.py::main`, using `store.py::search` and `generate.py::answer_from_chunks`
+
+#### Which town has a step-free mill museum? — run 1
+
+- Best distance: 0.3835 (passed the gate)
+- Sources retrieved: guide_accessibility.md, guide_brightwater.md, guide_givens_mill.md, guide_marchwood.md
+
+```
+Brightwater has a step-free mill museum. 
+
+Source: guide_accessibility.md
+```
+
+#### Which town is a regional hub? — run 1
+
+- Best distance: 0.5521 (passed the gate)
+- Sources retrieved: guide_accessibility.md, guide_corry_vale.md, guide_kestrelford.md, guide_marchwood.md
+
+```
+Marchwood is the regional hub (guide_marchwood.md).
+```
+
+#### Which town is difficult to reach by car, but easy to explore on foot? — run 1
+
+- Best distance: 0.4154 (passed the gate)
+- Sources retrieved: guide_accessibility.md, guide_brightwater.md, guide_corry_vale.md, guide_elder_ness.md, guide_halden_bay.md
+
+```
+Based on the provided documents, I do not have enough information to answer this question.
+```
+
+#### In Kestrelford, what is the reason most people come back? — run 1
+
+- Best distance: 0.5313 (passed the gate)
+- Sources retrieved: guide_elder_ness.md, guide_kestrelford.md, guide_seasons.md, guide_walking.md
+
+```
+In Kestrelford, the reason most people come back is the bakery (guide_kestrelford.md).
+```
+
+#### When is arguably the best week of the year in Brightwater? — run 1
+
+- Best distance: 0.3575 (passed the gate)
+- Sources retrieved: guide_eating.md, guide_kestrelford.md, guide_regional_transport.md, guide_seasons.md
+
+```
+Arguably the best week of the year in Brightwater is late May, due to long days, everything running, and the students being gone. 
+
+Source: guide_seasons.md
+```
+**Note:** The above answers provide evidence for Criteria 1, 2, and 5:
+
+- Criteria 1: whether the retrieved material supported the answer
+- Criteria 2: whether each answer named a source
+- Criteria 5: whether the factual claims were supported (even Q3 which could not find the information in the documents, did not make up a response and/or source to support) 
+
+---
+
+### Criterion 3 evidence - Out of Scope
+
+Produced by `run_eval.py::check_out_of_scope`, cutoff 0.6. Refused 5 of 5.
+
+Retrieval is deterministic and the gate is a comparison against a
+fixed number, so these do not vary between runs — one pass over the
+list is the whole measurement.
+
+| Out-of-scope question | Best distance | Gate |
+|---|---|---|
+| What is the capital of Mongolia? | 0.803 | refused |
+| How do I change the oil in a diesel engine? | 0.892 | refused |
+| Who won the 1994 World Cup? | 0.936 | refused |
+| What is the recommended dosage of ibuprofen for a headache? | 0.849 | refused |
+| How do I write a for loop in Rust? | 0.813 | refused |
+
+---
+
+### Criterion 4 evidence - chunk output
+
+```text
+======================================================================
+Chunk 1  |  source: guide_accessibility.md#0  |  produced by: chunker.py::split_documents
+======================================================================
+# Getting around the region with limited mobility
+
+An honest assessment rather than a promotional one. Some of these places are
+difficult and it is better to know in advance.
+
+======================================================================
+Chunk 2  |  source: guide_corry_vale.md#5  |  produced by: chunker.py::split_documents
+======================================================================
+## Where to stay
+
+Perhaps thirty beds in the entire valley, spread across two pubs and a handful of farmhouse rooms. In summer these are booked months ahead. Camping is permitted on two marked fields and nowhere else.
+
+======================================================================
+Chunk 3  |  source: guide_givens_mill.md#2  |  produced by: chunker.py::split_documents
+======================================================================
+## Getting around
+
+Everything is on one street along the river. The mill is at one end and the church at the other, eight minutes apart. The riverside path continues in both directions for as far as you want to walk.
+
+======================================================================
+Chunk 4  |  source: guide_marchwood.md#0  |  produced by: chunker.py::split_documents
+======================================================================
+# Marchwood
+
+Marchwood is the regional hub — 180,000 people, the junction everyone changes trains at, and a city most visitors pass through rather than stop in. That is a mistake, though an understandable one, since almost nothing of interest is near the station.
+
+======================================================================
+Chunk 5  |  source: guide_regional_transport.md#5  |  produced by: chunker.py::split_documents
+======================================================================
+Parking is the constraint rather than driving. Both Halden Bay lots fill by
+10am on summer weekends. Kestrelford's lower car park is free and involves a
+steep walk up.
+```
+
+**Note:** The `chunks` command was run three times. All three runs produced the same five chunks
+because `chunker.py::split_documents` is deterministic. Each of the five chunks
+contained a complete, self-contained idea, so the result was 5/5 on every run.
+
+---
+
 
 ## Verdicts
 

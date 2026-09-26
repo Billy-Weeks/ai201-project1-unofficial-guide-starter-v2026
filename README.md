@@ -330,11 +330,11 @@ contained a complete, self-contained idea, so the result was 5/5 on every run.
 
 | # | Criterion | Verdict | How I decided |
 |---|---|---|---|
-| 1 |  |  |  |
-| 2 |  |  |  |
-| 3 |  |  |  |
-| 4 |  |  |  |
-| 5 |  |  |  |
+| 1 | Retrieved chunks contain the answer for at least 4 of 5 test questions. | **MET** | Each of the three runs retrieved the answer-containing material for 4 of the 5 questions, meeting the 4-of-5 target in every run. |
+| 2 | Every answer names at least one source document. | **MISSED** | Each run had 4 of 5 answers with a named source. The third question produced an insufficient-information response without naming a source, so the 5-of-5 target was not met. |
+| 3 | The relevance gate stops clearly out-of-corpus questions in at least 4 of 5 tries. | **MET** | The gate refused all 5 of 5 out-of-corpus questions. Because this measurement is deterministic, the same 5/5 result correctly appears for all three runs. |
+| 4 | At least 4 of 5 printed chunks contain complete, self-contained ideas. | **MET** | All five inspected chunks contained complete, self-contained ideas, giving 5/5 and meeting the 4-of-5 target. The deterministic chunking produced the same result across all three checks. |
+| 5 | All 5 in-corpus answers contain only factual claims supported by the retrieved chunks. | **MET** | All five responses stayed grounded in the retrieved material. The difficult third question abstained rather than making an unsupported factual claim, so the result was 5/5. |
 
 ## Diagnoses
 

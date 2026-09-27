@@ -316,7 +316,6 @@ contained a complete, self-contained idea, so the result was 5/5 on every run.
 
 ---
 
-
 ## Verdicts
 
 <!-- MET or MISSED for each of the five, against the target you wrote last
@@ -356,12 +355,15 @@ contained a complete, self-contained idea, so the result was 5/5 on every run.
 
      Milestone 3. -->
 
+     Question 3 asks about the town with difficulty to drive too, but good to walk around. The top 5 chunks returned in the retrieval stage from `guide_accessibility.md`, `guide_brightwater.md`, `guide_corry_vale.md`, `guide_elder_ness.md`, `guide_halden_bay.md` did not contain information needed to answer the question. The relevant chunk is located in `guide_kestrelford.md`. While the chunks did maintain thoughts and ideas with splitting up, they still failed to contain any relevant information to the question posed. 
+
 ## The Improvement
 
 **What I changed:**
+I chose to increase `top-k` from 5 to 8.
 
 **Why I picked it:**
-
+Since the retrieval did not include the relevant Kestrelford chunk, increasing `top-k` should give retrieval more candidates and may include the missing chunk, allowing the system to better answer this question and name the sources. 
 <!-- Connect it to a specific diagnosis above in one sentence. If you can't,
      you picked a fix because it sounded impressive. -->
 

@@ -154,6 +154,10 @@ I kept the starter cutoff of 0.6 because it correctly separated all five in-corp
 
 **2.** I asked Codex to help design a chunker for the structured travel guides. The first implementation grouped paragraphs but produced some chunks with headings separated from their content. After inspecting the sample chunks, I changed the code so headings stay with the paragraph they introduce.
 
+**3** I asked Codex to better format evidence presentations in Unit 2: Milestone 1 as well as some of my explanations to make them _stronger_ and clearer.
+
+**4** Because I wanted to better understand why the increase in `top-k` still resulted in returning the incorrect answer for question 3, I asked Codex and we used this command: `app.py --corpus city_guides ask "Which town is difficult to reach by car, but easy to explore on foot?" --top-k 8 --show-prompt` which allowed us to see the actual chunk and in which document that chunk was being returned from. This allowed me to see that, while the correct document was being sourced from, the chunk being returned did not have the exact information needed as well as for me to see and understand why the answer that was returned, was given.
+
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never
      claims earns nothing.
@@ -390,7 +394,7 @@ Source: results/run_2026-09-27_1634_after.md, produced by run_eval.py::main. The
      tell.
 
      Milestone 4. -->
-Increasing `top-k` from 5 to 8 helped the system include a source citation, which was the criterion that the system failed previously. However it did not solve the core retrieval problem. Although `guide_kestrelford.md` appeared in the retrieved sources, the specific chunk containing the answer was still not present, so the system generated an incorrect answer using _Halden Bay_ information. The difficult question remained a question-level failer, even though Crtierion 1 still met its overall 4 of 5 targer. This shows that increasing `top-k` improved source citation, but did not solve the specific retrieval problem.
+Increasing `top-k` from 5 to 8 helped the system include a source citation, which was the criterion that the system failed previously. However it did not solve the core retrieval problem. Although `guide_kestrelford.md` appeared in the retrieved sources, the specific chunk containing the answer was still not present, so the system generated an incorrect answer using _Halden Bay_ information. The difficult question remained a question-level failure, even though Criterion 1 still met its overall 4 of 5 target. This shows that increasing `top-k` improved source citation, but did not solve the specific retrieval problem.
 
 ## What's Still Broken
 
@@ -401,6 +405,7 @@ Increasing `top-k` from 5 to 8 helped the system include a source citation, whic
      not.
 
      Milestone 5. -->
+While all criteria are still passing and so technically there is nothing "broken", the results show that the _after_ run reveal a broader **chunk level retrieval** issue. One question failed, and again this is still within the criterion expectations of 4 of 5 answering the questions correct, due to the correct chunk not being selected and similar questions that depend on a specific town or exact fact could fail in the same way. I would next contemplate increasing `top-k` further with improving how retrieval ranks chunks containing exact names and terms. I stopped after measuring one improvement because the milestone required one measured change.
 
 ## What I'd Do Differently
 
@@ -408,3 +413,4 @@ Increasing `top-k` from 5 to 8 helped the system include a source citation, whic
      differently, and why?
 
      Milestone 5. -->
+I would revise Criterion 4 so it evaluates answer bearing chunks rather than only checking a few arbitrary sample chunks for completeness. I would connect chunk completeness to retrieval depth by checking whether a complete answer remains together in a chunk that appears among the top retrieved results. This would make the criterion more useful for identifying whether a failure comes from chunking or retrieval ranking.

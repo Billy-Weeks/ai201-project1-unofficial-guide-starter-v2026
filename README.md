@@ -374,11 +374,13 @@ Since the retrieval did not include the relevant Kestrelford chunk, increasing `
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
-| 4. | | | | | |
-| 5. | | | | | |
+| 1. Retrieved chunk contains the answer | 4 of 5 | 4 of 5 | 4 of 5 | 4 of 5 | MET |
+| 2. Every answer names a source | 5 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
+| 3. Gate stops out-of-corpus questions | 4 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
+| 4. Chunks contain complete, not cut-off ideas | 4 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
+| 5. Answers contain only factual claims supported by the retrieved chunks | 5 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
+
+Source: results/run_2026-09-27_1634_after.md, produced by run_eval.py::main. The after-run output for the difficult town question is included in that file.
 
 **Did it help?**
 
@@ -388,6 +390,7 @@ Since the retrieval did not include the relevant Kestrelford chunk, increasing `
      tell.
 
      Milestone 4. -->
+Increasing `top-k` from 5 to 8 helped the system include a source citation, which was the criterion that the system failed previously. However it did not solve the core retrieval problem. Although `guide_kestrelford.md` appeared in the retrieved sources, the specific chunk containing the answer was still not present, so the system generated an incorrect answer using _Halden Bay_ information. The difficult question remained a question-level failer, even though Crtierion 1 still met its overall 4 of 5 targer. This shows that increasing `top-k` improved source citation, but did not solve the specific retrieval problem.
 
 ## What's Still Broken
 

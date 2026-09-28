@@ -33,7 +33,8 @@ CHUNK_OVERLAP = 120     # characters shared between neighbouring chunks
 
 # ─── Retrieval (Milestone 4) ─────────────────────────────────────────────────
 
-TOP_K = 5               # how many chunks to pull back per question
+TOP_K = 8               # how many chunks to pull back per question
+# Updated from 5 to 8, in unit 2, milestone 4, to allow the system to find relevant chunks
 
 # The relevance gate. If the best chunk is further away than this, the system
 # refuses to answer instead of handing the model thin material.
